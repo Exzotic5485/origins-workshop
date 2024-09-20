@@ -1,0 +1,37 @@
+{
+    "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+    "organizeImports": {
+        "enabled": true
+    },
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "recommended": true,
+            "a11y": {
+                "useButtonType": "off"
+            }
+        }
+    },
+    "formatter": {
+        "enabled": true,
+        "ignore": [
+            "node_modules/**",
+            "*.config.*",
+            "*.json",
+            "tsconfig.json",
+            ".turbo"
+        ]
+    },
+    "json": {
+        "formatter": {
+            "enabled": false
+        },
+        "linter": {
+            "enabled": false
+        }
+    },
+    "files": {
+        "ignoreUnknown": true,
+        "include": ["apps/**/*", "packages/**/*"]
+    }
+}
