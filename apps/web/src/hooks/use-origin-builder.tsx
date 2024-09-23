@@ -1,5 +1,10 @@
 import useLocalState from "@/hooks/use-local-state";
-import type { OriginType, PowerType, StoredOriginType } from "@/lib/types";
+import type {
+    OriginType,
+    PowerType,
+    StoredOriginType,
+    StoredPowerType,
+} from "@/lib/types";
 import { arrayMove } from "@dnd-kit/sortable";
 import { createContext, useContext, useMemo, useState } from "react";
 
@@ -18,6 +23,8 @@ type OriginBuilderContextType = {
         data: Partial<PowerType>
     ) => void;
     updateSelectedOriginPower: (id: number, data: Partial<PowerType>) => void;
+    addPower: (originId: number, data: StoredPowerType) => void;
+    deletePower: (originId: number, powerId: number) => void;
 };
 
 const OriginBuilderContext = createContext<OriginBuilderContextType | null>(
@@ -38,29 +45,7 @@ export function OriginBuilderProvider({
                 impact: 1,
                 unchoosable: false,
                 id: 1726563624202,
-                powers: [
-                    {
-                        id: 1,
-                        data: {
-                            type: "origins:abc",
-                        },
-                        version: "1.0.0",
-                    },
-                    {
-                        id: 2,
-                        data: {
-                            type: "origins:abc",
-                        },
-                        version: "1.0.0",
-                    },
-                    {
-                        id: 3,
-                        data: {
-                            type: "origins:abc",
-                        },
-                        version: "1.0.0",
-                    },
-                ],
+                powers: [],
             },
             {
                 name: "Blazeborn",
@@ -125,6 +110,7 @@ export function OriginBuilderProvider({
         setOrigins((origins) => origins.filter((origin) => origin.id !== id));
     };
 
+    // TODO: look into these functions: not sure if this is the best way to update / store the origins powers
     const reorderPowers = (
         originId: number,
         firstId: number,
@@ -182,6 +168,32 @@ export function OriginBuilderProvider({
         updatePower(selectedOrigin.id, id, data);
     };
 
+    const addPower = (originId: number, data: StoredPowerType) => {
+        const newOrigins = origins.map((origin) => {
+            if (origin.id !== originId) return origin;
+
+            origin.powers.push(data);
+
+            return origin;
+        });
+
+        setOrigins(newOrigins);
+    };
+
+    const deletePower = (originId: number, powerId: number) => {
+        const newOrigins = origins.map((origin) => {
+            if (origin.id !== originId) return origin;
+
+            origin.powers = origin.powers.filter(
+                (power) => power.id !== powerId
+            );
+
+            return origin;
+        });
+
+        setOrigins(newOrigins);
+    };
+
     return (
         <OriginBuilderContext.Provider
             value={{
@@ -195,6 +207,8 @@ export function OriginBuilderProvider({
                 reorderPowers,
                 updatePower,
                 updateSelectedOriginPower,
+                addPower,
+                deletePower
             }}
         >
             {children}

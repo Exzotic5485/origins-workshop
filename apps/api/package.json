@@ -11,7 +11,7 @@
     },
     "exports": {
         ".": {
-            "types": "./src/app.ts"
+            "types": "./src/shared-types.ts"
         }
     },
     "dependencies": {

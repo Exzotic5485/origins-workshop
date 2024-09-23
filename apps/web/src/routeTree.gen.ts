@@ -13,18 +13,18 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as LibraryImport } from './routes/library'
 
 // Create Virtual Routes
 
-const LibraryLazyImport = createFileRoute('/library')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
 
-const LibraryLazyRoute = LibraryLazyImport.update({
+const LibraryRoute = LibraryImport.update({
   path: '/library',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/library.lazy').then((d) => d.Route))
+} as any)
 
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
@@ -46,7 +46,7 @@ declare module '@tanstack/react-router' {
       id: '/library'
       path: '/library'
       fullPath: '/library'
-      preLoaderRoute: typeof LibraryLazyImport
+      preLoaderRoute: typeof LibraryImport
       parentRoute: typeof rootRoute
     }
   }
@@ -56,18 +56,18 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
-  '/library': typeof LibraryLazyRoute
+  '/library': typeof LibraryRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
-  '/library': typeof LibraryLazyRoute
+  '/library': typeof LibraryRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
-  '/library': typeof LibraryLazyRoute
+  '/library': typeof LibraryRoute
 }
 
 export interface FileRouteTypes {
@@ -81,12 +81,12 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
-  LibraryLazyRoute: typeof LibraryLazyRoute
+  LibraryRoute: typeof LibraryRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
-  LibraryLazyRoute: LibraryLazyRoute,
+  LibraryRoute: LibraryRoute,
 }
 
 export const routeTree = rootRoute
@@ -109,7 +109,7 @@ export const routeTree = rootRoute
       "filePath": "index.lazy.tsx"
     },
     "/library": {
-      "filePath": "library.lazy.tsx"
+      "filePath": "library.tsx"
     }
   }
 }

@@ -1,3 +1,5 @@
+import type { PowerWithConfigurableFields } from "../../../api/src/db/schema";
+
 export type OriginType = {
     name: string;
     icon: string;
@@ -13,7 +15,7 @@ export type StoredOriginType = {
 
 export type StoredPowerType = {
     id: number;
-    version: unknown;
+    remote: Omit<PowerWithConfigurableFields, "data">;
     data: PowerType;
 };
 

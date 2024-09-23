@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function getMinecraftAssetImage(id: string) {
-    if(!id) return getMinecraftAssetImage("minecraft:air");
+    if (!id) return getMinecraftAssetImage("minecraft:air");
 
     let [namespace, path] = id.split(":");
 

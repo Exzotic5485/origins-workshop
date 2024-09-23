@@ -35,3 +35,7 @@ export const configurableFieldsRelations = relations(
 
 export type Power = typeof powers.$inferSelect;
 export type ConfigurableField = typeof configurableFields.$inferSelect;
+
+export type PowerWithConfigurableFields = Power & {
+    configurableFields: ConfigurableField[];
+};

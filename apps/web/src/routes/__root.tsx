@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 import {
     Link,
@@ -11,6 +12,7 @@ export const Route = createRootRoute({
         <>
             <Header />
             <Outlet />
+            <Toaster />
         </>
     ),
 });

@@ -59,43 +59,43 @@
     }
 
     .brand {
-        --background: 0.00 0.00% 0.00%;
-        --foreground: 0.00 0.00% 100.00%;
-        
-        --primary: 53.88 100.00% 50.00%;
-        --primary-foreground: 0.00 0.00% 5.10%;
-        
-        --card: 0.00 0.00% 5.88%;
-        --card-foreground: 0.00 0.00% 100.00%;
-        
-        --popover: 0.00 0.00% 0.00%;
-        --popover-foreground: 0.00 0.00% 92.94%;
-        
+        --background: 0 0% 0%;
+        --foreground: 0 0% 100%;
+
+        --primary: 53.88 100% 50%;
+        --primary-foreground: 0 0% 5.1%;
+
+        --card: 0 0% 5.88%;
+        --card-foreground: 0 0% 100%;
+
+        --popover: 0 0% 0%;
+        --popover-foreground: 0 0% 92.94%;
+
         /* --secondary: 53.93 100.00% 17.45%;
         --secondary-foreground: 0.00 0.00% 100.00%; */
-        --secondary: 0.00 0.00% 12%;
-        --secondary-foreground: 0.00 0.00% 100.00%;
-        
-        --muted: 0.00 0.00% 9.80%;
-        --muted-foreground: 0.00 0.00% 50.20%;
-         
-        --accent: 53.93 100.00% 17.45%;
-        --accent-foreground: 53.68 100.00% 92.55%;
-        
+        --secondary: 0 0% 12%;
+        --secondary-foreground: 0 0% 100%;
+
+        --muted: 0 0% 9.8%;
+        --muted-foreground: 0 0% 50.2%;
+
+        --accent: 53.93 100% 17.45%;
+        --accent-foreground: 53.68 100% 92.55%;
+
         --destructive: 0 84.2% 60.2%;
         --destructive-foreground: 210 40% 98%;
-        
-        --border: 0.00 0.00% 10.59%;
-        --input: 0.00 0.00% 20.39%;
-        --ring: 53.88 100.00% 50.00%;
-        
-        --chart-1: 53.88 100.00% 50.00%;
-        --chart-2: 53.92 100.00% 42.55%;
-        --chart-3: 53.86 100.00% 32.55%;
-        --chart-4: 54.00 100.00% 27.45%;
-        --chart-5: 53.74 100.00% 22.55%;
-        
-        --radius: 0.5rem;        
+
+        --border: 0 0% 10.59%;
+        --input: 0 0% 20.39%;
+        --ring: 53.88 100% 50%;
+
+        --chart-1: 53.88 100% 50%;
+        --chart-2: 53.92 100% 42.55%;
+        --chart-3: 53.86 100% 32.55%;
+        --chart-4: 54 100% 27.45%;
+        --chart-5: 53.74 100% 22.55%;
+
+        --radius: 0.5rem;
     }
 }
 
@@ -128,4 +128,9 @@ summary {
 
 summary::-webkit-details-marker {
     display: none;
+}
+
+html {
+    overflow-y: auto;
+    scrollbar-gutter: stable; /* prevents content shifting when navigating between pages that overflow */
 }
