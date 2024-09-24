@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { HTTPException } from "hono/http-exception";
-import { getPowerById, getPowers } from "@/data-access/powers";
+import { getPowerById, getPowers } from "@/data-access/power";
 
 export const powersRoute = new Hono()
     .get("/", async (c) => {

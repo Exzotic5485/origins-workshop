@@ -7,7 +7,8 @@
         "dev": "bun run --hot src/index.ts",
         "db:generate": "drizzle-kit generate",
         "db:migrate": "bun run ./src/db/migrate.ts",
-        "db:push": "drizzle-kit push"
+        "db:push": "drizzle-kit push",
+        "db:studio": "drizzle-kit studio"
     },
     "exports": {
         ".": {
@@ -16,6 +17,7 @@
     },
     "dependencies": {
         "@hono/zod-validator": "^0.2.2",
+        "arctic": "^1.9.2",
         "drizzle-orm": "^0.33.0",
         "hono": "^4.5.11",
         "postgres": "^3.4.4",

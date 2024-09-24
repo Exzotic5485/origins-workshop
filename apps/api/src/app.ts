@@ -16,6 +16,7 @@ app.use(
 const apiRoutes = app
     .basePath("/api")
     .route("/powers", powersRoute)
+    .route("/auth", authRoute);
 
 export default app;
 export type AppType = typeof apiRoutes;
