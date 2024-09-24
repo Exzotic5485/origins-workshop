@@ -12,4 +12,4 @@ services:
       - 5432:5432
 
 volumes:
-  postgres:
+  .postgres_data:
