@@ -10,7 +10,11 @@ type UpdateStateInput<T> = ((state: T) => T) | T;
 export default function useLocalState<T>(
     initialValue: T,
     { key, json }: UseLocalStateOptions
-): [T, (state: UpdateStateInput<T>) => void] {
+): [
+    T,
+    (state: UpdateStateInput<T>) => void,
+    React.Dispatch<React.SetStateAction<T>>,
+] {
     const [state, setState] = useState<T>(() => {
         const value = window.localStorage.getItem(key);
 
@@ -28,5 +32,5 @@ export default function useLocalState<T>(
         setState(value);
     };
 
-    return [state, updateState];
+    return [state, updateState, setState];
 }

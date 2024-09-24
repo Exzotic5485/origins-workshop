@@ -6,7 +6,7 @@ import type {
     StoredPowerType,
 } from "@/lib/types";
 import { arrayMove } from "@dnd-kit/sortable";
-import { createContext, useContext, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 type OriginBuilderContextType = {
     origins: StoredOriginType[];
@@ -36,7 +36,9 @@ export function OriginBuilderProvider({
 }: {
     children: React.ReactNode;
 }) {
-    const [origins, setOrigins] = useLocalState<StoredOriginType[]>(
+    const [origins, setOrigins, setOriginsRaw] = useLocalState<
+        StoredOriginType[]
+    >(
         [
             {
                 name: "Avian",
@@ -62,6 +64,18 @@ export function OriginBuilderProvider({
             key: "origins",
         }
     );
+
+    useEffect(() => {
+        const syncHandler = (e: StorageEvent) => {
+            if (e.key !== "origins" || !e.newValue) return;
+
+            setOriginsRaw(JSON.parse(e.newValue));
+        };
+
+        window.addEventListener("storage", syncHandler);
+
+        return () => window.removeEventListener("storage", syncHandler);
+    }, [setOriginsRaw]);
 
     const [selectedOriginId, setSelectedOriginId] = useState<number>(0);
 
@@ -208,7 +222,7 @@ export function OriginBuilderProvider({
                 updatePower,
                 updateSelectedOriginPower,
                 addPower,
-                deletePower
+                deletePower,
             }}
         >
             {children}
