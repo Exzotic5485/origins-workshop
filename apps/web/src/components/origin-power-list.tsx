@@ -28,6 +28,7 @@ import { Separator } from "@/components/ui/separator";
 import type { ConfigurableField } from "@repo/api";
 import { useMemo } from "react";
 import { getValueAtPath, setValueAtPath } from "@repo/utils";
+import useDebounce from "@/hooks/use-debounce";
 
 export default function OriginPowerList() {
     const { selectedOrigin, reorderPowers } = useOriginBuilder();
@@ -82,28 +83,41 @@ function OriginPower({ power }: OriginPowerProps) {
     const { setNodeRef, listeners, attributes, transform, transition } =
         useSortable({ id: power.id });
 
+    const debounce = useDebounce();
+
     const { selectedOrigin, updateSelectedOriginPower, deletePower } =
         useOriginBuilder();
 
     const handleNameInput = (e: React.FormEvent<HTMLInputElement>) => {
-        console.log(e.currentTarget.value);
-        updateSelectedOriginPower(power.id, {
-            name: e.currentTarget.value,
-        });
+        debounce(
+            () =>
+                updateSelectedOriginPower(power.id, {
+                    name: e.currentTarget.value,
+                }),
+            "name"
+        );
     };
 
     const handleDescriptionInput = (
         e: React.FormEvent<HTMLTextAreaElement>
     ) => {
-        updateSelectedOriginPower(power.id, {
-            description: e.currentTarget.value,
-        });
+        debounce(
+            () =>
+                updateSelectedOriginPower(power.id, {
+                    description: e.currentTarget.value,
+                }),
+            "description"
+        );
     };
 
     const handleHiddenToggle = (checked: boolean) => {
-        updateSelectedOriginPower(power.id, {
-            hidden: checked,
-        });
+        debounce(
+            () =>
+                updateSelectedOriginPower(power.id, {
+                    hidden: checked,
+                }),
+            "hidden"
+        );
     };
 
     const handleDelete = () => {
@@ -215,6 +229,8 @@ function PowerConfigurableField({
 }: ConfigurableFieldProps) {
     const { selectedOrigin, updatePower } = useOriginBuilder();
 
+    const debounce = useDebounce();
+
     const value = useMemo(() => {
         const value = getValueAtPath(power.data, configurableField.fieldPath);
 
@@ -224,13 +240,15 @@ function PowerConfigurableField({
     const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
         if (!selectedOrigin) return;
 
-        updatePower(
-            selectedOrigin.id,
-            power.id,
-            setValueAtPath(
-                power.data,
-                configurableField.fieldPath,
-                e.currentTarget.value
+        debounce(() =>
+            updatePower(
+                selectedOrigin.id,
+                power.id,
+                setValueAtPath(
+                    power.data,
+                    configurableField.fieldPath,
+                    e.currentTarget.value
+                )
             )
         );
     };

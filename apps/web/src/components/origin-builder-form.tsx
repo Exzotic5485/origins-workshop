@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import useDebounce from "@/hooks/use-debounce";
 import { useOriginBuilder } from "@/hooks/use-origin-builder";
 import { getMinecraftAssetImage } from "@/lib/utils";
 import { useEffect } from "react";
@@ -43,14 +44,15 @@ export default function OriginBuilderForm() {
         name: "icon",
     });
 
+    const debounce = useDebounce();
+
     useEffect(() => {
         const subscriber = form.watch((data) => {
-            console.log("~ Form Save:", data);
-            updateSelectedOrigin(data);
+            debounce(() => updateSelectedOrigin(data));
         });
 
         return () => subscriber.unsubscribe();
-    }, [updateSelectedOrigin, form]);
+    }, [updateSelectedOrigin, form, debounce]);
 
     // only olution I could find to stop errors when setting disabled in form options
     useEffect(() => {
