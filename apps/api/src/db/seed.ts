@@ -1,9 +1,9 @@
-import { client, db } from ".";
+import { client, db } from "@/db";
 import {
     type PowerWithConfigurableFields,
     configurableFields,
     powers,
-} from "./schema";
+} from "@/db/schema";
 
 const POWERS: PowerWithConfigurableFields[] = [
     {

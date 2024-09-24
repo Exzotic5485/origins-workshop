@@ -1,5 +1,10 @@
 import { relations } from "drizzle-orm";
-import { jsonb, pgTable, serial, text, varchar } from "drizzle-orm/pg-core";
+import { jsonb, pgTable, serial, text } from "drizzle-orm/pg-core";
+
+export const users = pgTable("users", {
+    id: serial("id").primaryKey(),
+    
+});
 
 export const powers = pgTable("powers", {
     id: serial("id").primaryKey(),
