@@ -146,10 +146,12 @@ const OriginPower = forwardRef<HTMLDivElement, OriginPowerProps>(
             useOriginBuilder();
 
         const handleNameInput = (e: React.FormEvent<HTMLInputElement>) => {
+            const name = e.currentTarget.value;
+
             debounce(
                 () =>
                     updateSelectedOriginPower(power.id, {
-                        name: e.currentTarget.value,
+                        name,
                     }),
                 "name"
             );
@@ -158,10 +160,12 @@ const OriginPower = forwardRef<HTMLDivElement, OriginPowerProps>(
         const handleDescriptionInput = (
             e: React.FormEvent<HTMLTextAreaElement>
         ) => {
+            const description = e.currentTarget.value;
+
             debounce(
                 () =>
                     updateSelectedOriginPower(power.id, {
-                        description: e.currentTarget.value,
+                        description,
                     }),
                 "description"
             );
@@ -217,7 +221,7 @@ const OriginPower = forwardRef<HTMLDivElement, OriginPowerProps>(
                                 className={cn(
                                     power.data.hidden && "text-muted-foreground"
                                 )}
-                                value={power.data.name}
+                                defaultValue={power.data.name}
                                 onInput={handleNameInput}
                             />
                             <p className="text-sm text-muted-foreground">
