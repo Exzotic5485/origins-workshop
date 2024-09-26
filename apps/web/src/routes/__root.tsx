@@ -19,7 +19,7 @@ import {
     createRootRouteWithContext,
     useLocation,
 } from "@tanstack/react-router";
-import { LogInIcon } from "lucide-react";
+import { LogInIcon, LogOutIcon } from "lucide-react";
 
 type RouterContext = {
     auth: ReturnType<typeof useAuth>;
@@ -117,7 +117,10 @@ function AuthButtons() {
                 <DropdownMenuLabel>{user.username}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                    <a href="/api/auth/logout">Logout</a>
+                    <a href="/api/auth/logout">
+                        <LogOutIcon className="size-4 mr-2" />
+                        Logout
+                    </a>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
