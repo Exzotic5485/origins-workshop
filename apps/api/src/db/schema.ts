@@ -1,3 +1,4 @@
+import type { PowerType } from "@/shared-types";
 import { relations } from "drizzle-orm";
 import { jsonb, pgEnum, pgTable, serial, text } from "drizzle-orm/pg-core";
 
@@ -20,7 +21,7 @@ export const accounts = pgTable("accounts", {
 
 export const powers = pgTable("powers", {
     id: serial("id").primaryKey(),
-    data: jsonb("data").notNull().$type(),
+    data: jsonb("data").notNull().$type<PowerType>(),
     name: text("name").notNull(),
     description: text("description").notNull(),
     summary: text("summary").notNull(),

@@ -1,5 +1,5 @@
 import { client } from "@/lib/api";
-import type { Power } from "@repo/api";
+import type { Power, PowerWithConfigurableFields } from "@repo/api";
 
 export async function getPowers(): Promise<Power[]> {
     const response = await client.api.powers.$get();
@@ -9,7 +9,7 @@ export async function getPowers(): Promise<Power[]> {
     return response.json();
 }
 
-export async function getPower(id: number): Promise<Power> {
+export async function getPower(id: number): Promise<PowerWithConfigurableFields> {
     const response = await client.api.powers[":id"].$get({
         param: {
             id: id.toString(),

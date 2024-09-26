@@ -1,3 +1,4 @@
+import type { PowerType } from "@repo/api";
 import type { PowerWithConfigurableFields } from "../../../api/src/db/schema";
 
 export type OriginType = {
@@ -18,11 +19,3 @@ export type StoredPowerType = {
     remote: Omit<PowerWithConfigurableFields, "data">;
     data: PowerType;
 };
-
-export type PowerType = {
-    type: string;
-    name?: string;
-    description?: string;
-    hidden?: boolean;
-    // biome-ignore lint/suspicious/noExplicitAny: powers can be off too many types
-} & Record<string, any>;

@@ -23,5 +23,5 @@ export const powersRoute = new Hono()
 
         if (!power) return c.json({ message: "Not found." }, 404);
 
-        return c.json({ power });
+        return c.json(power);
     });

@@ -45,7 +45,7 @@ function SearchCard() {
 }
 
 function PowerList() {
-    const { powers } = Route.useLoaderData();
+    const powers = Route.useLoaderData();
 
     return (
         <div className="grid space-y-2">
