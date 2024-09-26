@@ -29,6 +29,9 @@
         --chart-4: 43 74% 66%;
         --chart-5: 27 87% 67%;
         --radius: 0.5rem;
+
+        --brand-discord: 234.94 85.56% 64.71%;
+        --brand-github: 0 2.13% 9.22%;
     }
 
     .dark {
@@ -130,7 +133,7 @@ summary::-webkit-details-marker {
     display: none;
 }
 
-html {
+body {
     overflow-y: auto;
-    scrollbar-gutter: stable; /* prevents content shifting when navigating between pages that overflow */
+    scrollbar-gutter: stable;
 }

@@ -1,6 +1,6 @@
-type GithubIconProps = React.SVGProps<SVGSVGElement>;
+import type { IconProps } from "@/components/icons/types";
 
-export default function GithubIcon({ ...props }: GithubIconProps) {
+export default function GithubIcon(props: IconProps) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"

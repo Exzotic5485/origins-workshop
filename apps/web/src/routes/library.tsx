@@ -11,9 +11,8 @@ import {
 import { useOriginBuilder } from "@/hooks/use-origin-builder";
 import { getPower, getPowers } from "@/lib/api/powers";
 import { getMinecraftAssetImage } from "@/lib/utils";
-import type { Power } from "@repo/api";
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { SearchIcon, Undo2Icon, UndoIcon } from "lucide-react";
+import { SearchIcon, Undo2Icon } from "lucide-react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
@@ -88,7 +87,7 @@ function PowerCard({ power }: PowerCardProps) {
         addPower(originId, {
             id: Date.now(),
             remote: remotePower,
-            data
+            data,
         });
 
         const t = toast(

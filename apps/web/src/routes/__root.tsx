@@ -1,13 +1,31 @@
+import Avatar from "@/components/avatar";
+import { Button } from "@/components/ui/button";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Toaster } from "@/components/ui/sonner";
+import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
 import {
     Link,
     Outlet,
     createRootRoute,
+    createRootRouteWithContext,
     useLocation,
 } from "@tanstack/react-router";
+import { LogInIcon } from "lucide-react";
 
-export const Route = createRootRoute({
+type RouterContext = {
+    auth: ReturnType<typeof useAuth>;
+};
+
+export const Route = createRootRouteWithContext<RouterContext>()({
     component: () => (
         <>
             <Header />
@@ -40,6 +58,7 @@ function Header() {
                         <NavLink to="/library">Power Library</NavLink>
                     </div>
                 </div>
+                <AuthButtons />
             </div>
         </div>
     );
@@ -62,5 +81,45 @@ function NavLink({
             )}
             {...props}
         />
+    );
+}
+
+function AuthButtons() {
+    const { user, isLoading } = useAuth();
+
+    if (isLoading) {
+        return <Skeleton className="size-10 rounded-full" />;
+    }
+
+    if (!user) {
+        return (
+            <Button
+                size="sm"
+                asChild
+            >
+                <Link to="/login">
+                    <LogInIcon className="size-4 mr-1" />
+                    Login
+                </Link>
+            </Button>
+        );
+    }
+
+    return (
+        <DropdownMenu>
+            <DropdownMenuTrigger>
+                <Avatar
+                    username={user.username}
+                    className="rounded-full"
+                />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-[200px]">
+                <DropdownMenuLabel>{user.username}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                    <a href="/api/auth/logout">Logout</a>
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
     );
 }
