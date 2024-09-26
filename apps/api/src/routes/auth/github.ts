@@ -1,6 +1,7 @@
 import { env } from "@/env";
-import { createTokens, loginAccount } from "@/lib/auth";
+import { loginAccount } from "@/lib/auth";
 import { getGithubEmails, getGithubUser, github } from "@/lib/auth/github";
+import { setSession } from "@/lib/auth/session";
 import { generateState } from "arctic";
 import { Hono } from "hono";
 import { getCookie, setCookie } from "hono/cookie";
@@ -51,13 +52,13 @@ export const githubRoute = new Hono()
             profile.email = primaryEmail.email;
         }
 
-        const account = await loginAccount(profile.id.toString(), "github", {
+        const user = await loginAccount(profile.id.toString(), "github", {
             avatarUrl: profile.avatar_url,
             email: profile.email,
             username: profile.login,
         });
 
-        const { token } = await createTokens(account);
+        await setSession(c, user);
 
-        return c.text(token);
+        return c.redirect("/");
     });

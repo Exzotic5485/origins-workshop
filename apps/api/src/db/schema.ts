@@ -5,7 +5,8 @@ export const accountProviderEnum = pgEnum("provider", ["github", "discord"]);
 
 export const users = pgTable("users", {
     id: serial("id").primaryKey(),
-    email: text("email").unique(),
+    email: text("email").unique().notNull(),
+    username: text("username").unique().notNull(),
 });
 
 export const accounts = pgTable("accounts", {
@@ -65,7 +66,7 @@ export type Account = typeof accounts.$inferInsert;
 export type Power = typeof powers.$inferSelect;
 export type ConfigurableField = typeof configurableFields.$inferSelect;
 
-export type AccountType = typeof accountProviderEnum.enumValues[number];
+export type AccountType = (typeof accountProviderEnum.enumValues)[number];
 
 export type PowerWithConfigurableFields = Power & {
     configurableFields: ConfigurableField[];

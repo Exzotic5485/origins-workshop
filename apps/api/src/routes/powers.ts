@@ -9,7 +9,7 @@ export const powersRoute = new Hono()
 
         const powers = await getPowers();
 
-        return c.json({ powers });
+        return c.json(powers);
     })
     .get("/:id", async (c) => {
         const id = Number(c.req.param("id"));
@@ -21,7 +21,7 @@ export const powersRoute = new Hono()
 
         const power = await getPowerById(Number(id));
 
-        if (!power) return c.json({ message: "Not found." }, 404)
+        if (!power) return c.json({ message: "Not found." }, 404);
 
         return c.json({ power });
     });
