@@ -1,11 +1,11 @@
 import useLocalState from "@/hooks/use-local-state";
 import type {
     OriginType,
-    PowerType,
     StoredOriginType,
     StoredPowerType,
 } from "@/lib/types";
 import { arrayMove } from "@dnd-kit/sortable";
+import type { PowerType } from "@repo/schemas";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 type OriginBuilderContextType = {

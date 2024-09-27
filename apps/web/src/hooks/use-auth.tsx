@@ -1,30 +1,37 @@
 import { getUser } from "@/lib/api/auth";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { useRouter } from "@tanstack/react-router";
-import { createContext, useContext, useEffect, useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { createContext, useContext } from "react";
+
+type User = Awaited<ReturnType<typeof getUser>>;
 
 type AuthContextType = {
-    user?: {
-        id: number;
-        username: string;
-        email: string;
-    };
+    user: User;
     isLoading: boolean;
+    ensureUser: () => Promise<User>;
 };
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
+const getUserQueryOptions = {
+    queryKey: ["user"],
+    queryFn: getUser,
+};
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-    const { data: user, isLoading } = useQuery({
-        queryKey: ["user"],
-        queryFn: getUser,
-    });
+    const queryClient = useQueryClient();
+
+    const { data: user, isLoading } = useQuery(getUserQueryOptions);
+
+    const ensureUser = async () => {
+        return queryClient.ensureQueryData(getUserQueryOptions);
+    };
 
     return (
         <AuthContext.Provider
             value={{
                 user,
                 isLoading,
+                ensureUser,
             }}
         >
             {children}

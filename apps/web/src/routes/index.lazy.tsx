@@ -67,8 +67,6 @@ function OriginProjectSelect() {
                                 ? "bg-secondary"
                                 : "bg-muted"
                         )}
-                        role="button"
-                        tabIndex={0}
                     >
                         <img
                             className="size-6 image-pixelated"

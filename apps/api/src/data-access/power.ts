@@ -1,13 +1,13 @@
+import { db } from "@/db";
+import { type NewPower, powers } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { db } from "../db";
-import { powers } from "../db/schema";
 
 export function getPowerById(id: number) {
     return db.query.powers.findFirst({
         where: eq(powers.id, id),
         with: {
-            configurableFields: true
-        }
+            configurableFields: true,
+        },
     });
 }
 
@@ -16,7 +16,13 @@ export function getPowers() {
         columns: {
             id: true,
             name: true,
-            summary: true
-        }
-    })
+            summary: true,
+        },
+    });
+}
+
+export async function createPower(newPower: NewPower) {
+    const [power] = await db.insert(powers).values(newPower).returning();
+
+    return power;
 }

@@ -11,7 +11,8 @@
                 "useButtonType": "off"
             },
             "style": {
-                "noNonNullAssertion": "warn"
+                "noNonNullAssertion": "warn",
+                "noUnusedTemplateLiteral": "off"
             }
         }
     },

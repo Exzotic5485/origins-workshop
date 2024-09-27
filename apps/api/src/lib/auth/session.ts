@@ -9,7 +9,7 @@ export const REFRESH_TOKEN_COOKIE = "refresh_token";
 
 export const JWT_LIFE_SPAN = 60 * 60 * 24; // 24 hours
 
-type JWTPayload = {
+export type JWTPayload = {
     sub: number;
     email: string;
     username: string;

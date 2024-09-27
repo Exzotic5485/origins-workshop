@@ -1,4 +1,4 @@
-import type { PowerType } from "@repo/api";
+import type { PowerType } from "@repo/schemas";
 import type { PowerWithConfigurableFields } from "../../../api/src/db/schema";
 
 export type OriginType = {

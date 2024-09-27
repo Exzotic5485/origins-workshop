@@ -15,6 +15,8 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRoute } from './routes/__root'
 import { Route as LoginImport } from './routes/login'
 import { Route as LibraryImport } from './routes/library'
+import { Route as AuthenticatedImport } from './routes/_authenticated'
+import { Route as AuthenticatedLibraryUploadImport } from './routes/_authenticated/library.upload'
 
 // Create Virtual Routes
 
@@ -32,10 +34,22 @@ const LibraryRoute = LibraryImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AuthenticatedRoute = AuthenticatedImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const AuthenticatedLibraryUploadRoute = AuthenticatedLibraryUploadImport.update(
+  {
+    path: '/library/upload',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any,
+)
 
 // Populate the FileRoutesByPath interface
 
@@ -46,6 +60,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedImport
       parentRoute: typeof rootRoute
     }
     '/library': {
@@ -62,47 +83,80 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
+    '/_authenticated/library/upload': {
+      id: '/_authenticated/library/upload'
+      path: '/library/upload'
+      fullPath: '/library/upload'
+      preLoaderRoute: typeof AuthenticatedLibraryUploadImport
+      parentRoute: typeof AuthenticatedImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface AuthenticatedRouteChildren {
+  AuthenticatedLibraryUploadRoute: typeof AuthenticatedLibraryUploadRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedLibraryUploadRoute: AuthenticatedLibraryUploadRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
+  '': typeof AuthenticatedRouteWithChildren
   '/library': typeof LibraryRoute
   '/login': typeof LoginRoute
+  '/library/upload': typeof AuthenticatedLibraryUploadRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
+  '': typeof AuthenticatedRouteWithChildren
   '/library': typeof LibraryRoute
   '/login': typeof LoginRoute
+  '/library/upload': typeof AuthenticatedLibraryUploadRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/library': typeof LibraryRoute
   '/login': typeof LoginRoute
+  '/_authenticated/library/upload': typeof AuthenticatedLibraryUploadRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/library' | '/login'
+  fullPaths: '/' | '' | '/library' | '/login' | '/library/upload'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/library' | '/login'
-  id: '__root__' | '/' | '/library' | '/login'
+  to: '/' | '' | '/library' | '/login' | '/library/upload'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/library'
+    | '/login'
+    | '/_authenticated/library/upload'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   LibraryRoute: typeof LibraryRoute
   LoginRoute: typeof LoginRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
   LibraryRoute: LibraryRoute,
   LoginRoute: LoginRoute,
 }
@@ -120,6 +174,7 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/_authenticated",
         "/library",
         "/login"
       ]
@@ -127,11 +182,21 @@ export const routeTree = rootRoute
     "/": {
       "filePath": "index.lazy.tsx"
     },
+    "/_authenticated": {
+      "filePath": "_authenticated.tsx",
+      "children": [
+        "/_authenticated/library/upload"
+      ]
+    },
     "/library": {
       "filePath": "library.tsx"
     },
     "/login": {
       "filePath": "login.tsx"
+    },
+    "/_authenticated/library/upload": {
+      "filePath": "_authenticated/library.upload.tsx",
+      "parent": "/_authenticated"
     }
   }
 }
