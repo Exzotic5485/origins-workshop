@@ -103,8 +103,3 @@ summary {
 summary::-webkit-details-marker {
     display: none;
 }
-
-body {
-    overflow-y: auto;
-    scrollbar-gutter: stable;
-}

@@ -65,6 +65,11 @@ export function OriginBuilderProvider({
         }
     );
 
+    const [selectedOriginId, setSelectedOriginId] = useLocalState<number>(0, {
+        json: true,
+        key: "selected_origin",
+    });
+
     useEffect(() => {
         const syncHandler = (e: StorageEvent) => {
             if (e.key !== "origins" || !e.newValue) return;
@@ -76,8 +81,6 @@ export function OriginBuilderProvider({
 
         return () => window.removeEventListener("storage", syncHandler);
     }, [setOriginsRaw]);
-
-    const [selectedOriginId, setSelectedOriginId] = useState<number>(0);
 
     const selectedOrigin = useMemo(
         () => origins.find((origin) => origin.id === selectedOriginId),

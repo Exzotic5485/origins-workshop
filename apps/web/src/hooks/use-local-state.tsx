@@ -2,7 +2,7 @@ import { useState } from "react";
 
 type UseLocalStateOptions = {
     key: string;
-    json: boolean;
+    json?: boolean;
 };
 
 type UpdateStateInput<T> = ((state: T) => T) | T;

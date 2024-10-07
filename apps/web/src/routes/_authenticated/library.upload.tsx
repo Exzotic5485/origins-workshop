@@ -1,4 +1,4 @@
-import PowerUploadForm from "@/components/power-upload-form";
+import PowerUpload from "@/components/power-upload";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { createFileRoute } from "@tanstack/react-router";
@@ -14,9 +14,7 @@ function LibraryUpload() {
                 <h1 className="text-3xl font-semibold">Upload Power</h1>
                 <Separator />
             </div>
-            <Card className="p-6">
-                <PowerUploadForm />
-            </Card>
+            <PowerUpload />
         </div>
     );
 }

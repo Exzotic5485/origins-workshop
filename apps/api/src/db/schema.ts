@@ -6,6 +6,11 @@ import { jsonb, pgEnum, pgTable, serial, text } from "drizzle-orm/pg-core";
 
 export const accountProviderEnum = pgEnum("provider", ["github", "discord"]);
 
+export const configurableFieldTypeEnum = pgEnum("configurable_field_type", [
+    "string",
+    "number",
+]);
+
 // Tables:
 
 export const users = pgTable("users", {
@@ -19,7 +24,7 @@ export const accounts = pgTable("accounts", {
     userId: serial("user_id").references(() => users.id, {
         onDelete: "cascade",
     }),
-    provider: accountProviderEnum("provider"),
+    provider: accountProviderEnum("provider").notNull(),
     providerId: text("provider_id").unique(),
 });
 
@@ -42,6 +47,7 @@ export const configurableFields = pgTable("configureable_fields", {
     fieldPath: text("field_path").notNull(),
     name: text("name").notNull(),
     description: text("description").notNull(),
+    type: configurableFieldTypeEnum("type").notNull(),
 });
 
 // Relations:

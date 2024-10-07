@@ -1,9 +1,19 @@
 // biome-ignore lint/suspicious/noExplicitAny: ...
 export function getValueAtPath(object: Record<string, any>, path: string): any {
-    console.log("Finding value:", path);
     const keys = path.split(".");
 
-    return keys.reduce((prev, cur) => prev[cur] ?? null, object);
+    let cur = object;
+
+    for (const key of keys) {
+        if (cur === undefined || typeof cur !== "object") {
+            return undefined;
+        }
+
+        cur = cur[key];
+    }
+
+    return cur;
+    // return keys.reduce((prev, cur) => prev[cur] ?? null, object);
 }
 
 /**
@@ -23,7 +33,7 @@ export function setValueAtPath(
             return object;
         }
 
-        if(typeof prev[cur] !== "object") {
+        if (typeof prev[cur] !== "object") {
             prev[cur] = {};
         }
 
